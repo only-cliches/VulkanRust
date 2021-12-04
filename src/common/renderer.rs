@@ -457,24 +457,22 @@ impl App {
                 .into_iter()
                 .find(|&p| p == vk::PresentModeKHR::MAILBOX)
                 .unwrap_or(vk::PresentModeKHR::FIFO);
-            // let extent = {
-            //     if capabilities.current_extent.width != u32::max_value() {
-            //         capabilities.current_extent
-            //     } else {
-            //         vk::Extent2D {
-            //             width: width
-            //                 .max(capabilities.min_image_extent.width)
-            //                 .min(capabilities.max_image_extent.width),
-            //             height: height
-            //                 .max(capabilities.min_image_extent.height)
-            //                 .min(capabilities.max_image_extent.height),
-            //         }
-            //     }
-            // };
-            let extent = vk::Extent2D { width: 300, height: 200};
-            capabilities.current_extent = extent;
-
-            println!("{:?}", capabilities);
+                println!("{:?}", capabilities.current_extent);
+            let extent = {
+                if capabilities.current_extent.width != u32::max_value() {
+                    capabilities.current_extent
+                } else {
+                    vk::Extent2D {
+                        width: width
+                            .max(capabilities.min_image_extent.width)
+                            .min(capabilities.max_image_extent.width),
+                        height: height
+                            .max(capabilities.min_image_extent.height)
+                            .min(capabilities.max_image_extent.height),
+                    }
+                }
+            };
+            // let extent = vk::Extent2D { width, height };
 
             let image_count = capabilities.min_image_count + 1;
             let image_count = if capabilities.max_image_count != 0 {
@@ -513,8 +511,6 @@ impl App {
             (swapchain, format, extent)
         };
         let swapchain_images = unsafe { swapchain_loader.get_swapchain_images(swapchain)? };
-
-        println!("format: {:?}", format);
 
         Ok((swapchain_loader, swapchain, format, extent, swapchain_images))
     }
@@ -722,7 +718,7 @@ impl App {
     }
 
     pub fn new(event_loop: &EventLoop<()>) -> Result<Self> {
-        let (width, height) = (900, 600);
+        let (width, height) = (1170 * 3, 2289 * 3);
         let title = "Test";
 
         // Create Window
@@ -1334,7 +1330,7 @@ impl App {
             self.device
                 .begin_command_buffer(command_buffer, &vk::CommandBufferBeginInfo::builder())?;
 
-                self.extent = vk::Extent2D { width: 300, height: 200 };
+                // self.extent = vk::Extent2D { width: 300, height: 200 };
 
             self.device.cmd_begin_render_pass(
                 command_buffer,

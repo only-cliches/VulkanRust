@@ -167,6 +167,7 @@ fn init_logging() {
     wgpu_subscriber::initialize_default_subscriber(None);
 }
 
+const FPS_30: u128 = 33333;
 const FPS_60: u128 = 16666;
 
 #[mobile_entry_point]
@@ -213,7 +214,7 @@ fn main() {
 
                         let last_frame_since = elapsed.as_micros();
 
-                        if last_frame_since > FPS_60 {
+                        if last_frame_since > FPS_30 {
 
                             counter += 1;
                             counter = counter % 60;
