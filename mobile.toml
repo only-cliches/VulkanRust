@@ -1,0 +1,8 @@
+[app]
+name = "vulkan-rust"
+stylized-name = "Vulkan Rust"
+domain = "scottlott.com"
+template-pack = "wgpu"
+
+[apple]
+development-team = "8VCRS2R88L"

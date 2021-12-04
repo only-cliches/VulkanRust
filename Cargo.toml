@@ -1,0 +1,54 @@
+[package]
+name = "vulkan-rust"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+winit = "0.25.0"
+ash = "0.33.2"
+num = "0.4.0"
+wgpu = "0.6.0"
+memoffset = "0.6.4"
+egui-winit-ash-integration = { path = "./egui-winit-ash-integration" }
+ash-window = "0.7.0"
+crevice = "0.7.1"
+mint = "0.5.6"
+tobj = "3.0.1"
+anyhow = "1.0.51"
+gpu-allocator = "0.10.0"
+mobile-entry-point = "0.1.1"
+egui = "0.14.2"
+futures = "0.3.18"
+wgpu-subscriber = "0.1.0"
+
+[lib]
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[[bin]]
+name = "vulkan-rust-desktop"
+path = "gen/bin/desktop.rs"
+
+[dependencies.cgmath]
+version = "0.18.0"
+features = ["mint"]
+
+[dependencies.bitflags]
+version = ">= 1.0.4"
+
+[target.'cfg(target_os = "macos")'.dependencies]
+metal = "0.17.0"
+cocoa = "0.18.4"
+objc  = "0.2.5"
+
+[target.'cfg(target_os = "windows")'.dependencies]
+winapi = { version = "0.3.5", features = ["windef", "libloaderapi"] }
+
+[target.'cfg(target_os = "android")'.dependencies]
+android_logger = "0.9.0"
+log = "0.4.11"
+ndk-glue = "0.2.1"
+
+[target.'cfg(not(target_os = "android"))'.dependencies]
+simple_logger = "1.11.0"
